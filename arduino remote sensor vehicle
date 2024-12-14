@@ -3,83 +3,70 @@
 
 const int EchoPin = 5;
 const int TriggerPin = 6;
-int speed = 80; /
+const int maxSpeed = 255; // Velocitat màxima
 
-
-
-// Create the motor shield object with the default I2C address
+// Crear l'objecte del motor shield amb l'adreça I2C predeterminada
 Adafruit_MotorShield AFMS = Adafruit_MotorShield(); 
-
-
 
 Adafruit_DCMotor *myMotor = AFMS.getMotor(1);
 Adafruit_DCMotor *myOtherMotor = AFMS.getMotor(2);
 
-
-
-
 void setup() {
-  Serial.begin(9600);           // set up Serial library at 9600 bps
+  Serial.begin(9600); // Configurar la biblioteca Serial a 9600 bps
   Serial.println("Adafruit Motorshield v2 - DC Motor test!");
-  
 
-  AFMS.begin();  // create with the default frequency 1.6KHz
-  //AFMS.begin(1000);  // OR with a different frequency, say 1KHz
-  
-  // turn off motor
+  AFMS.begin(); // Crear amb la freqüència predeterminada de 1.6KHz
+  // AFMS.begin(1000); // O amb una freqüència diferent, per exemple, 1KHz
+  int speed=200;
+  // Apagar els motors
   myMotor->run(RELEASE);
   myOtherMotor->run(RELEASE);
   pinMode(TriggerPin, OUTPUT);
   pinMode(EchoPin, INPUT);
+
+  myMotor->setSpeed(speed);
+  myOtherMotor->setSpeed(speed); // Ajustar la velocitat
 }
 
 void loop() {
-   int cm = ping(TriggerPin, EchoPin);
+  int cm = ping(TriggerPin, EchoPin);
+  
 
-   
-   if(cm >20 && speed <255){
-    
-    myMotor->setSpeed(speed);
-    myOtherMotor->setSpeed(speed);
+
+  if (cm > 10) {
+    int speed =cm;
     myMotor->run(BACKWARD);
     myOtherMotor->run(FORWARD);
-   
-   }
-    speed ++; //Augmenta la velocitat gradualment
-
-   if(cm < 10 ){
+    
+  }else if (cm < 10) {
     myMotor->run(RELEASE);
     myOtherMotor->run(RELEASE);
     delay(1000);
     myMotor->run(BACKWARD);
     myOtherMotor->run(BACKWARD);
     delay(1000);
-    speed = 50;
-     int cm = ping(TriggerPin, EchoPin);
-
-   }
-   delay(80);
-    
-  }
-
+    cm = ping(TriggerPin, EchoPin);
    
 
-
+  }
+  
+}
 
 int ping(int TriggerPin, int EchoPin) {
-   long duration, distanceCm;
-   
-   digitalWrite(TriggerPin, LOW);  
-   delayMicroseconds(4);
-   digitalWrite(TriggerPin, HIGH);  
-   delayMicroseconds(10);
-   digitalWrite(TriggerPin, LOW);
-   
-   duration = pulseIn(EchoPin, HIGH);  
-   
-   distanceCm = duration * 10 / 292/ 2;   
-   
-     return distanceCm;
-
-   
+  long duration, distanceCm;
+  
+  digitalWrite(TriggerPin, LOW);  
+  delayMicroseconds(4);
+  digitalWrite(TriggerPin, HIGH);  
+  delayMicroseconds(10);
+  digitalWrite(TriggerPin, LOW);
+  
+  duration = pulseIn(EchoPin, HIGH);  
+  distanceCm = duration * 0.034 / 2; // Convertir a cm
+  
+  return distanceCm;
 }
+
+
+  
+
