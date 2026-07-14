@@ -17,10 +17,4 @@ Clone the Repository
 
 
 
-## Contribute
 
-1. Fork the project.
-2. Create a branch ('git checkout -b feature').
-3. Commit your changes ('git commit -m 'Add new functionality'').
-4. Upload the changes ('git push origin feature/new-functionality').
-5. Open a pull request.
