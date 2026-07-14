@@ -1,20 +1,33 @@
-# Project Arduino Remote Sensor Vehicle
+# Arduino Remote Sensor Vehicle
 
-It is a project with the Arduino IDE to maneuver a vehicle with a distance sensor. The project is assembled with an arduino uno board and adafruit motorshield. 
+Obstacle-avoidance vehicle built with Arduino Uno, Adafruit Motor Shield v2, and HC-SR04 ultrasonic sensor.
 
-## Installation
+The vehicle detects obstacles via ultrasonic distance measurement and adjusts motor direction automatically — no remote control required.
 
-Before you start, make sure you have the following programs and tools installed:
+**Built:** 2023  
+**Stack:** Arduino C · Adafruit MotorShield v2 · I2C · HC-SR04 ultrasonic sensor
 
-Arduino IDE: To program and load the code on the Arduino board.
+---
 
-Adafruit Motor Shield Library: To control the motors with the Adafruit Motor Shield.
+## How it works
 
-Git: To clone the repository and manage the code.
+- HC-SR04 measures distance to obstacles continuously
+- If distance > 10cm → motors run forward
+- If distance < 10cm → motors stop and reverse to avoid collision
+- Motor speed and direction controlled via Adafruit Motor Shield over I2C
 
-Installation Steps
-Clone the Repository
+---
 
+## Hardware
+
+- Arduino Uno
+- Adafruit Motor Shield v2
+- HC-SR04 ultrasonic sensor
+- 2x DC motors
+
+---
+
+*Early embedded hardware project. Current work focuses on FPGA security acceleration for post-quantum cryptography
 
 
 
